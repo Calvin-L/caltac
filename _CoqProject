@@ -1,0 +1,7 @@
+-Q src CalTac
+
+src/Util.v
+src/Core.v
+src/BuiltInRewrites.v
+src/Classical.v
+src/CalTac.v
