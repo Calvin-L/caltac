@@ -72,6 +72,7 @@ conclusions---which are useful when trying to read or repair a proof.
       - `(fun x => P) y`             ==>   `P[x |-> y]`       ("beta" reduction)
       - `let a := b in c`            ==>   `c[a |-> b]`       ("zeta" reduction)
       - `match A with A => B end`    ==>   `B`                ("match" reduction)
+      - any unfolding rule in the hint database `normalize`
       - any rewrite rule in the rewrite hint database `normalize`
 
   - `obvious [using lem1, lem2, ...].`

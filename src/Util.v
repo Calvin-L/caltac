@@ -31,6 +31,7 @@ Ltac2 _nf_step () :=
     end
   | [ |- forall _, _ ] => intros (* matches `P->Q` as well *)
   | [ |- _ ] => progress ( cbv beta iota zeta in * )
+  | [ |- _ ] => progress ( ltac1:( autounfold with normalize in * ) )
   | [ h : ?t |- _ ] => ltac1:(hh |- progress ( rewrite_strat (innermost (old_hints normalize)) in hh )) (Ltac1.of_ident h)
   | [ |- _ ] => ltac1:(progress ( rewrite_strat (innermost (old_hints normalize)) ))
   end.
