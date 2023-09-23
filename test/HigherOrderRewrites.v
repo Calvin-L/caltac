@@ -10,7 +10,7 @@ Proof.
   obvious.
 Qed.
 
-#[local] Hint Rewrite not_exists_iff_forall_not : normalize.
+#[local] Hint Rewrite not_exists_iff_forall_not : nf.
 
 Lemma not_all_iff_ex_not:
   forall T (P : T -> Prop),
@@ -19,7 +19,7 @@ Proof.
   obvious using not_all_ex_not.
 Qed.
 
-#[local] Hint Rewrite not_all_iff_ex_not : normalize.
+#[local] Hint Rewrite not_all_iff_ex_not : nf.
 
 Lemma not_true_iff_false:
   ~True <-> False.
@@ -27,7 +27,7 @@ Proof.
   obvious.
 Qed.
 
-#[local] Hint Rewrite not_true_iff_false : normalize.
+#[local] Hint Rewrite not_true_iff_false : nf.
 
 Lemma not_false_iff_true:
   ~False <-> True.
@@ -35,7 +35,7 @@ Proof.
   obvious.
 Qed.
 
-#[local] Hint Rewrite not_false_iff_true : normalize.
+#[local] Hint Rewrite not_false_iff_true : nf.
 
 Lemma test:
   forall T,

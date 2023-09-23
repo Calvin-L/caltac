@@ -72,8 +72,8 @@ conclusions---which are useful when trying to read or repair a proof.
       - `(fun x => P) y`             ==>   `P[x |-> y]`       ("beta" reduction)
       - `let a := b in c`            ==>   `c[a |-> b]`       ("zeta" reduction)
       - `match A with A => B end`    ==>   `B`                ("match" reduction)
-      - any unfolding rule in the hint database `normalize`
-      - any rewrite rule in the rewrite hint database `normalize`
+      - any unfolding rule in the hint database `nf`
+      - any rewrite rule in the rewrite hint database `nf`
 
   - `obvious [using lem1, lem2, ...].`
     Immediately prove the current goal using a battery of quick solver tactics.
@@ -183,7 +183,7 @@ simplification rewrites:
 
 ```coq
 Lemma add_x_0: forall x, x + 0 = x. ... Qed.
-#[export] Hint Rewrite add_x_0 : normalize.
+#[export] Hint Rewrite add_x_0 : nf.
 ```
 
 For best results, do not add rewrite rules with preconditions to the rewrite

@@ -176,7 +176,7 @@ Proof.
   intros; reflexivity.
 Qed.
 
-#[local] Hint Rewrite simplify_foo_prop : normalize.
+#[local] Hint Rewrite simplify_foo_prop : nf.
 
 Lemma test006:
   (forall x, foo_prop {| foo_prop := fun x => x > 0 |} x) ->
@@ -213,7 +213,7 @@ Proof.
   obvious.
 Qed.
 
-#[local] Hint Rewrite in_nil_iff : normalize.
+#[local] Hint Rewrite in_nil_iff : nf.
 
 Lemma cons_eq_app_false:
   forall T (x : T) (l : list T),
@@ -221,7 +221,7 @@ Lemma cons_eq_app_false:
 Proof.
   obvious.
 Qed.
-#[local] Hint Rewrite cons_eq_app_false : normalize.
+#[local] Hint Rewrite cons_eq_app_false : nf.
 
 Lemma nil_eq_app_iff:
   forall T (l1 l2 : list T),
@@ -240,8 +240,8 @@ Proof.
   obvious using nil_eq_app_iff.
 Qed.
 
-#[local] Hint Rewrite nil_eq_app_iff : normalize.
-#[local] Hint Rewrite app_eq_nil_iff : normalize.
+#[local] Hint Rewrite nil_eq_app_iff : nf.
+#[local] Hint Rewrite app_eq_nil_iff : nf.
 
 Fixpoint find_first_spec {T} (test : T -> Prop) (l : list T) (x : T) : Prop :=
   match l with

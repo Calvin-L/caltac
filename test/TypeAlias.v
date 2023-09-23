@@ -5,7 +5,7 @@ Section type_alias.
 Definition T := nat.
 Variable P : forall T, T -> T -> Prop.
 Axiom P_refl_nat : forall x, P nat x x <-> True.
-#[local] Hint Rewrite P_refl_nat : normalize.
+#[local] Hint Rewrite P_refl_nat : nf.
 
 (*
  * Rewriting does not "see through" the type alias T to apply P_refl_nat.
@@ -24,7 +24,7 @@ Abort.
  * With an unfolding hint, T gets unfolded into nat and then P_refl_nat
  * can be applied.
  *)
-#[local] Hint Unfold T : normalize.
+#[local] Hint Unfold T : nf.
 Lemma test002:
   forall x : T,
     P T x x.
