@@ -42,6 +42,7 @@ Ltac2 rec _nf_hyp (h : ident) : unit :=
     | None => destruct $hh as [? $h]
     | Some x => let name := Fresh.in_goal x in destruct $hh as [$name $h]
     end > [_nf_hyp h]
+  | True => clear $h
   | _ =>
     if _any [
       (fun () => progress ( cbv beta iota zeta in $h ));

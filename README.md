@@ -67,6 +67,7 @@ conclusions---which are useful when trying to read or repair a proof.
     goal or generate new ones.  These are the rules:
       - `(H : A /\ B) |- _`          ==>   `H1:A, H2:B |- _`
       - `(H : exists x, P x) |- _`   ==>   `x, P x |- _`
+      - `(H : True) |- _`            ==>   `|- _`
       - `|- forall x, P x`           ==>   `x |- P x`
       - `|- P -> Q`                  ==>   `P |- Q`
       - `(fun x => P) y`             ==>   `P[x |-> y]`       ("beta" reduction)
