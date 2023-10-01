@@ -32,8 +32,8 @@ Ltac2 _nf_step () :=
   | [ |- forall _, _ ] => intros (* matches `P->Q` as well *)
   | [ |- _ ] => progress ( cbv beta iota zeta in * )
   | [ |- _ ] => progress ( ltac1:( autounfold with nf in * ) )
-  | [ h : ?t |- _ ] => ltac1:(hh |- progress ( rewrite_strat (innermost (old_hints nf)) in hh )) (Ltac1.of_ident h)
-  | [ |- _ ] => ltac1:(progress ( rewrite_strat (innermost (old_hints nf)) ))
+  | [ h : ?t |- _ ] => ltac1:(hh |- progress ( rewrite_strat (outermost (old_hints nf)) in hh )) (Ltac1.of_ident h)
+  | [ |- _ ] => ltac1:(progress ( rewrite_strat (outermost (old_hints nf)) ))
   end.
 
 Ltac2 rec _use (terms : Std.reference list) :=
