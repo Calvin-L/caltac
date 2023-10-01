@@ -3,7 +3,7 @@ Require Ltac2.Fresh.
 Require Ltac2.Message.
 Require Ltac2.Constr.
 
-Require Import CalTac.Util.
+Require Import CalTac.Internals.
 
 Ltac2 Notation "nf" := repeat (_nf_step ()).
 

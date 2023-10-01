@@ -1,6 +1,6 @@
 -Q src CalTac
 
-src/Util.v
+src/Internals.v
 src/Core.v
 src/BuiltInRewrites.v
 src/Classical.v
