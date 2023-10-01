@@ -5,7 +5,7 @@ Require Ltac2.Constr.
 
 Require Import CalTac.Internals.
 
-Ltac2 Notation "nf" := repeat (_nf_step ()).
+Ltac2 Notation "nf" := Control.enter (fun () => _nf_goal (); _nf_all_hyps ()).
 
 Ltac2 Notation "use" t(list1(reference, ",")) := _use t.
 

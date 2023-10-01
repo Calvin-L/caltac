@@ -20,20 +20,52 @@ Ltac2 get_lambda_name (x:constr) :=
   | _ => None
   end.
 
-Ltac2 _nf_step () :=
-  match! goal with
-  | [ h : _ /\ _ |- _ ] => let hh := Control.hyp h in destruct $hh
-  | [ h : ex ?p |- _ ] =>
-    let hh := Control.hyp h in
+Ltac2 rec _any (ops : (unit -> unit) list) : bool :=
+  match ops with
+  | [] => false
+  | op :: rest =>
+    if Control.plus
+      (fun () => op (); true)
+      (fun _ => false)
+    then true
+    else _any rest
+  end.
+
+Ltac2 rec _nf_hyp (h : ident) : unit :=
+  let hh := Control.hyp h in
+  lazy_match! (Constr.type hh) with
+  | _ /\ _ =>
+    let h2 := Fresh.in_goal @H in
+    destruct $hh as [$h $h2] > [_nf_hyp h] > [_nf_hyp h2]
+  | ex ?p =>
     match get_lambda_name p with
-    | None => destruct $hh
+    | None => destruct $hh as [? $h]
     | Some x => let name := Fresh.in_goal x in destruct $hh as [$name $h]
-    end
-  | [ |- forall _, _ ] => intros (* matches `P->Q` as well *)
-  | [ |- _ ] => progress ( cbv beta iota zeta in * )
-  | [ |- _ ] => progress ( ltac1:( autounfold with nf in * ) )
-  | [ h : ?t |- _ ] => ltac1:(hh |- progress ( rewrite_strat (outermost (old_hints nf)) in hh )) (Ltac1.of_ident h)
-  | [ |- _ ] => ltac1:(progress ( rewrite_strat (outermost (old_hints nf)) ))
+    end > [_nf_hyp h]
+  | _ =>
+    if _any [
+      (fun () => progress ( cbv beta iota zeta in $h ));
+      (fun () => progress ( ltac1:(x |- autounfold with nf in x) (Ltac1.of_ident h) ));
+      (fun () => progress ( ltac1:(x |- rewrite_strat (outermost (old_hints nf)) in x) (Ltac1.of_ident h) ))]
+    then _nf_hyp h
+    else ()
+  end.
+
+Ltac2 _nf_all_hyps () : unit :=
+  let hyps := Control.hyps () in
+  List.iter _nf_hyp (List.map (fun (h, _, _) => h) hyps).
+
+Ltac2 rec _nf_goal () : unit :=
+  lazy_match! goal with
+  | [ |- forall _, _ ] =>
+    intros > [_nf_goal ()]
+  | [ |- _ ] =>
+    if _any [
+      (fun () => progress ( cbv beta iota zeta ));
+      (fun () => progress ( ltac1:(autounfold with nf) ));
+      (fun () => progress ( ltac1:(rewrite_strat (outermost (old_hints nf))) ))]
+    then _nf_goal ()
+    else ()
   end.
 
 Ltac2 rec _use (terms : Std.reference list) :=
@@ -131,5 +163,5 @@ Ltac2 _case_analysis_step () :=
   | [ |- _ /\ _ ] => split
   | [ |- context [ match ?x with _ => _ end ] ] => destruct $x eqn:?
   | [ h : context [ match ?x with _ => _ end ] |- _ ] => destruct $x eqn:?
-  | [ |- _ ] => progress (_nf_step ())
+  | [ |- _ ] => progress (_nf_goal (); _nf_all_hyps ())
   end.
