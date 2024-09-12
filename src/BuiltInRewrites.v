@@ -63,6 +63,13 @@ Proof.
 Qed.
 #[export] Hint Rewrite and_P_true : nf.
 
+Lemma and_P_false:
+  forall P, (P /\ False) <-> False.
+Proof.
+  obvious.
+Qed.
+#[export] Hint Rewrite and_P_false : nf.
+
 Lemma implies_true_P:
   forall P : Prop, (True -> P) <-> P.
 Proof.
