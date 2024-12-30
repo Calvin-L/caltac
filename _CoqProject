@@ -2,6 +2,7 @@
 
 src/Internals.v
 src/Core.v
-src/BuiltInRewrites.v
+src/BuiltInRewritesProp.v
+src/BuiltInRewritesTuple.v
 src/Classical.v
 src/CalTac.v
