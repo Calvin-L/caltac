@@ -163,6 +163,6 @@ Ltac2 _case_analysis_step () :=
   | [ |- _ <-> _ ] => split
   | [ |- _ /\ _ ] => split
   | [ |- context [ match ?x with _ => _ end ] ] => destruct $x eqn:?
-  | [ h : context [ match ?x with _ => _ end ] |- _ ] => destruct $x eqn:?
+  | [ _ : context [ match ?x with _ => _ end ] |- _ ] => destruct $x eqn:?
   | [ |- _ ] => progress (_nf_goal (); _nf_all_hyps ())
   end.

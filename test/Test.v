@@ -57,7 +57,7 @@ Proof.
   nf.
   suffices False. {
     lazy_match! goal with
-    | [ h : False |- _ ] => ()
+    | [ _ : False |- _ ] => ()
     | [ |- _ ] => fail
     end.
     obvious using definitionally_equal.
@@ -183,7 +183,7 @@ Lemma test006:
   False.
 Proof.
   intros.
-  Fail lazy_match! goal with [ h : forall _, _ > 0 |- _ ] => () end.
+  Fail lazy_match! goal with [ _ : forall _, _ > 0 |- _ ] => () end.
   nf.
   lazy_match! goal with [ h : forall _, _ > 0 |- _ ] => let hh := Control.hyp h in specialize $hh with 0 end.
   obvious.
