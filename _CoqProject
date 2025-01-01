@@ -4,5 +4,6 @@ src/Internals.v
 src/Core.v
 src/BuiltInRewritesProp.v
 src/BuiltInRewritesTuple.v
+src/BuiltInRewritesList.v
 src/Classical.v
 src/CalTac.v
