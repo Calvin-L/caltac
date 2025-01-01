@@ -109,7 +109,7 @@ Ltac solve1 := solve [ eauto | simple congruence | lia ].
  * tactic from unfolding fixpoints applied to constructors.
  *)
 Ltac2 _preferred_hammer_tactic () :=
-  ltac1:(hauto red:off).
+  ltac1:(hauto red:off urew:off).
 
 (*Ltac2 _obvious () := solve [ ltac1:(firstorder solve1) ].*)
 Ltac2 _obvious () := solve [

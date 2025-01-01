@@ -27,20 +27,14 @@ Fixpoint fib x :=
   | S n => fib n + fib (n-1)
   end.
 
-Lemma unfold_fib:
-  forall x,
-    fib x = match x with
-    | 0 => 1
-    | 1 => 1
-    | S n => fib n + fib (n-1)
-    end.
-Proof.
-  obvious.
-Qed.
-
 Lemma fib_positive:
   forall x, fib x > 0.
 Proof.
-  induction x using strong_induction;
-    obvious using unfold_fib.
+  induction x using strong_induction.
+  suffices (match x with
+    | 0 => 1
+    | 1 => 1
+    | S n => fib n + fib (n-1)
+    end > 0) by obvious.
+  obvious.
 Qed.
